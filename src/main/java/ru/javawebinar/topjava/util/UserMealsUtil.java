@@ -39,17 +39,24 @@ public class UserMealsUtil {
 
         Map<LocalDate, Integer> map = new TreeMap<>();
 
-        mealList.forEach(meal -> map.merge(meal.getDateTime().toLocalDate(), meal.getCalories(), (a, b) -> a + b));
+        mealList.forEach(meal -> map.merge(meal.getDateTime().toLocalDate(), meal.getCalories(), Integer::sum));
 
         List<UserMealWithExceed> resultList = new ArrayList<>();
 
-        for (UserMeal meal : mealList) {
-
+        mealList.forEach(meal -> {
             if (TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime)) {
                 resultList.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
                         caloriesPerDay < map.get(meal.getDateTime().toLocalDate())));
             }
-        }
+        });
+
+        mealList.forEach(meal -> {
+            if (TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime)) {
+                resultList.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
+                        caloriesPerDay < map.get(meal.getDateTime().toLocalDate())));
+            }
+        });
+
         return resultList;
     }
 
@@ -58,8 +65,8 @@ public class UserMealsUtil {
                                                                          int caloriesPerDay) {
 
         Map<LocalDate, Integer> map =
-        mealList.stream().collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate(),
-                Collectors.summingInt(UserMeal::getCalories)));
+                mealList.stream().collect(Collectors.groupingBy(meal -> meal.getDateTime().toLocalDate(),
+                        Collectors.summingInt(UserMeal::getCalories)));
 
         return mealList.stream().
                 filter(male -> (TimeUtil.isBetween(male.getDateTime().toLocalTime(), startTime, endTime))).
