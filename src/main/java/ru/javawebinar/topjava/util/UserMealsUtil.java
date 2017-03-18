@@ -50,13 +50,6 @@ public class UserMealsUtil {
             }
         });
 
-        mealList.forEach(meal -> {
-            if (TimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime)) {
-                resultList.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
-                        caloriesPerDay < map.get(meal.getDateTime().toLocalDate())));
-            }
-        });
-
         return resultList;
     }
 
