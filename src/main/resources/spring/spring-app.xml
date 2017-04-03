@@ -10,7 +10,9 @@
         <bean class="ru.javawebinar.topjava.service.UserServiceImpl">
             <property name="repository" ref="mockUserRepository"/>
         </bean>
+
     -->
+
 
     <context:annotation-config/>
 
