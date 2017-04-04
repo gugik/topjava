@@ -1,14 +1,13 @@
 package ru.javawebinar.topjava.repository.mock;
 
 import org.springframework.stereotype.Repository;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,37 +23,46 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(this::save);
+        MealsUtil.MEALS.forEach((meal) -> save(meal, 1));
     }
 
     @Override
-    public Meal save(Meal meal) {
+    public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
         }
+        else if (get(meal.getId(),userId)==null) return  null;
+        meal.setUserId(userId);
         repository.put(meal.getId(), meal);
         return meal;
     }
 
     @Override
-    public boolean delete(int id) {
-        Meal meal=repository.get(id);
-        if (AuthorizedUser.id()==meal.getUserId()) {repository.remove(id); return true;}
-        else return false;
+    public boolean delete(int id, int userId) {
+        if (get(id,userId)==null) return false;
+        repository.remove(id);
+        return true;
     }
 
     @Override
-    public Meal get(int id) {
+    public Meal get(int id, int userId) {
         Meal meal=repository.get(id);
-        if (AuthorizedUser.id()==meal.getUserId()) {repository.remove(id); return meal;}
-        else return null;
+        return userId==meal.getUserId()? meal: null;
     }
 
     @Override
-    public Collection<Meal> getAll() {
+    public Collection<Meal> getAll(int userId) {
+        return getAll(userId,LocalDate.MIN, LocalDate.MAX);
+    }
+
+    @Override
+    public Collection<Meal> getAll(int userId, LocalDate startDate, LocalDate endDate) {
         Collection<Meal> collection=repository.values()
                 .stream()
-                .filter(meal -> meal.getUserId()==AuthorizedUser.id())
+                .filter(meal -> meal.getUserId()==userId)
+                .filter(meal -> (
+                        (meal.getDate().isAfter(startDate)||meal.getDate().equals(startDate))
+                        && (meal.getDate().isBefore(endDate)||meal.getDate().equals(endDate))))
                 .sorted(((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime())))
                 .collect(Collectors.toList());
         return collection.isEmpty()? Collections.EMPTY_LIST:collection;

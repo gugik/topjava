@@ -16,6 +16,40 @@
     </style>
 </head>
 <body>
+
+
+
+<section>
+
+
+    <hr>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+        <h2>My meal</h2>
+        </thead>
+        <form method="post" action="meals">
+            <dl>
+                <dt>Date after</dt>
+                <dd><input  name="startDate" value="${param.startDate}"></dd>
+            </dl>
+            <dl>
+                <dt>Date before</dt>
+                <dd><input  name="endDate" value="${param.endDate}"></dd>
+            </dl>
+            <dl>
+                <dt>Time after</dt>
+                <dd><input  name="startTime" value="${param.startTime}"></dd>
+            </dl>
+            <dl>
+                <dt>Time before</dt>
+                <dd><input name="endTime" value="${param.endTime}"></dd>
+            </dl>
+            <button type="submit">Choose</button>
+        </form>
+    </table>
+</section>
+
+
 <section>
     <h2><a href="index.html">Home</a></h2>
     <h2>Meal list</h2>

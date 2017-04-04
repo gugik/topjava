@@ -16,14 +16,17 @@ public class Meal extends BaseEntity {
 
     private final int calories;
 
-    private final int userId;
+    private int userId;
 
-    public Meal(LocalDateTime dateTime, String description, int calories, int userId) {
-        this(null, dateTime, description, calories, userId);
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories, int userId) {
-        this.userId = userId;
+    public Meal(LocalDateTime dateTime, String description, int calories) {
+        this(null, dateTime, description, calories);
+    }
+
+    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;
