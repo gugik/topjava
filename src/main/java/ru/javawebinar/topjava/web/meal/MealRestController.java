@@ -22,6 +22,7 @@ public class MealRestController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     @Autowired
     private MealService service;
+
     public Meal save(Meal meal) {
         LOG.info("create " + meal);
         return service.save(meal, AuthorizedUser.id());
@@ -31,10 +32,12 @@ public class MealRestController {
         LOG.info("delete " + id);
         service.delete(id, AuthorizedUser.id());
     }
+
     public Meal get(int id) {
         LOG.info("get " + id);
         return service.get(id, AuthorizedUser.id());
     }
+
     public List<MealWithExceed> getAll() {
         LOG.info("getAll");
         return MealsUtil.getWithExceeded(service.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay());

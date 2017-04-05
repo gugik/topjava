@@ -61,7 +61,7 @@ public class MealServlet extends HttpServlet {
         } else {
 
             request.setAttribute("meals",
-                   controller.getAll(
+                    controller.getAll(
                             request.getParameter("startDate").isEmpty() ? LocalDate.MIN : LocalDate.parse(request.getParameter("startDate")),
                             request.getParameter("endDate").isEmpty() ? LocalDate.MAX : LocalDate.parse(request.getParameter("endDate")),
                             request.getParameter("startTime").isEmpty() ? LocalTime.MIN : LocalTime.parse(request.getParameter("startTime")),
@@ -70,6 +70,7 @@ public class MealServlet extends HttpServlet {
         }
 
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");

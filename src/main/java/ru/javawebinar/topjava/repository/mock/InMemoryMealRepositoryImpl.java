@@ -63,7 +63,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 .filter(meal -> (
                         (meal.getDate().isAfter(startDate)||meal.getDate().equals(startDate))
                         && (meal.getDate().isBefore(endDate)||meal.getDate().equals(endDate))))
-                .sorted(((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime())))
+                .sorted(((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime())))
                 .collect(Collectors.toList());
         return collection.isEmpty()? Collections.EMPTY_LIST:collection;
     }
