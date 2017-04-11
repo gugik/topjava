@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -13,11 +14,8 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
-
-    public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private UserRepository repository;
 
     @Override
     public User save(User user) {
