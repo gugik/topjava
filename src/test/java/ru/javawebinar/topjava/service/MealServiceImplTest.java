@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.DbPopulator;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -49,6 +50,11 @@ public class MealServiceImplTest {
         MealTestData.MATCHER.assertEquals(MEAL_USER_BREAKFAST_30, meal);
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundGet() throws Exception {
+        service.get(ID_USER_BREAKFAST_30, ADMIN_ID);
+    }
+
     @Test
     public void delete() throws Exception {
         service.delete(ID_ADMIN_LUNCH_30, ADMIN_ID);
@@ -56,13 +62,20 @@ public class MealServiceImplTest {
                 Arrays.asList(MEAL_ADMIN_SUPPER_30, MEAL_ADMIN_BREAKFAST_30), service.getAll(ADMIN_ID));
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundDelete() throws Exception {
+        service.delete(ID_ADMIN_LUNCH_30, USER_ID);
+    }
+
+
     @Test
     public void getBetweenDateTimes() throws Exception {
         MATCHER.assertCollectionEquals(
-                Arrays.asList(MEAL_ADMIN_SUPPER_30,
-                        MEAL_ADMIN_LUNCH_30,
-                        MEAL_ADMIN_BREAKFAST_30),
-                service.getBetweenDateTimes(LocalDateTime.MIN, LocalDateTime.MAX, ADMIN_ID));
+                Arrays.asList(MEAL_USER_SUPPER_31,
+                        MEAL_USER_LUNCH_31,
+                        MEAL_USER_BREAKFAST_31),
+                service.getBetweenDateTimes(LocalDateTime.of(2015, Month.MAY, 31, 10, 0),
+                        LocalDateTime.of(2015, Month.MAY, 31, 20, 0), USER_ID));
     }
 
     @Test
@@ -76,11 +89,18 @@ public class MealServiceImplTest {
 
     @Test
     public void update() throws Exception {
-        Meal updated = MEAL_USER_BREAKFAST_31;
-        updated.setDescription("Breakfast");
+        Meal updated = MEAL_USER_LUNCH_30;
+        updated.setDescription("Lunch");
         updated.setCalories(330);
         service.update(updated, USER_ID);
-        MATCHER.assertEquals(updated, service.get(ID_USER_BREAKFAST_31, USER_ID));
+        MATCHER.assertEquals(updated, service.get(ID_USER_LUNCH_30, USER_ID));
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundUpdate() throws Exception {
+        Meal updated = MEAL_USER_BREAKFAST_31;
+        updated.setCalories(330);
+        service.update(updated, ADMIN_ID);
     }
 
     @Test
@@ -94,5 +114,4 @@ public class MealServiceImplTest {
                 MEAL_ADMIN_LUNCH_30,
                 MEAL_ADMIN_BREAKFAST_30), service.getAll(ADMIN_ID));
     }
-
 }
