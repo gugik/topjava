@@ -1,3 +1,9 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f6bbf626f8b488695fc089dadc0f1b7)](https://www.codacy.com/app/gugik/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gugik/topjava&amp;utm_campaign=Badge_Grade)
+
+[![Dependency Status](https://dependencyci.com/github/gugik/topjava/badge)](https://dependencyci.com/github/gugik/topjava)
+
+
+
 Java Enterprise Online Project 
 ===============================
 Наиболее востребованные технологии /инструменты / фреймворки Java Enterprise:
