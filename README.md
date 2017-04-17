@@ -2,7 +2,7 @@
 
 [![Dependency Status](https://dependencyci.com/github/gugik/topjava/badge)](https://dependencyci.com/github/gugik/topjava)
 
-
+[![Build Status](https://travis-ci.org/gugik/topjava.svg?branch=master)](https://travis-ci.org/gugik/topjava)
 
 Java Enterprise Online Project 
 ===============================
