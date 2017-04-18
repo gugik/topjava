@@ -1,7 +1,12 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TestName;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +19,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -27,6 +34,8 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
+
     static {
         SLF4JBridgeHandler.install();
     }
@@ -34,8 +43,39 @@ public class MealServiceTest {
     @Autowired
     private MealService service;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Rule
+    public TestName testName = new TestName();
+
+    long startTime;
+    static Map<String, Long> map = new HashMap<>();
+
+    @Before
+    public void start() {
+        startTime = System.currentTimeMillis();
+    }
+
+    @After
+    public void end() {
+        String method = testName.getMethodName();
+        Long time = System.currentTimeMillis() - startTime;
+        LOG.info("{} time performance {} ml sec", method, time);
+        map.put(method, time);
+    }
+
+    @AfterClass
+    public static void aboutAll() {
+        for (Map.Entry<String, Long> s : map.entrySet())
+        {
+            LOG.info("{} time performance {} ml sec", s.getKey(), s.getValue());
+        }
+    }
+
     @Test
     public void testDelete() throws Exception {
+
         service.delete(MEAL1_ID, USER_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
     }
@@ -85,4 +125,6 @@ public class MealServiceTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 service.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), USER_ID));
     }
+
+
 }
