@@ -2,8 +2,10 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
 import org.junit.rules.TestName;
 import org.junit.rules.Timeout;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -46,42 +49,40 @@ public class MealServiceTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private static Map<String, Long> map = new HashMap<>();
+
+    private static void logInfo(Description description, String status, long nanos) {
+        String testName = description.getMethodName();
+        Long time = TimeUnit.NANOSECONDS.toMicros(nanos);
+        LOG.info(String.format("Test %s %s, spent %d microseconds",
+                testName, status, time));
+        map.put(testName, time);
+    }
+
     @Rule
-    public TestName testName = new TestName();
-
-    long startTime;
-    static Map<String, Long> map = new HashMap<>();
-
-    @Before
-    public void start() {
-        startTime = System.currentTimeMillis();
-    }
-
-    @After
-    public void end() {
-        String method = testName.getMethodName();
-        Long time = System.currentTimeMillis() - startTime;
-        LOG.info("{} time performance {} ml sec", method, time);
-        map.put(method, time);
-    }
+    public Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            logInfo(description, "finished", nanos);
+        }
+    };
 
     @AfterClass
     public static void aboutAll() {
-        for (Map.Entry<String, Long> s : map.entrySet())
-        {
+        for (Map.Entry<String, Long> s : map.entrySet()) {
             LOG.info("{} time performance {} ml sec", s.getKey(), s.getValue());
         }
     }
 
     @Test
     public void testDelete() throws Exception {
-
         service.delete(MEAL1_ID, USER_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
-    public void testDeleteNotFound() throws Exception {
+    @Test
+    public void testDeleteNotFound() {
+        thrown.expect(NotFoundException.class);
         service.delete(MEAL1_ID, 1);
     }
 
@@ -98,8 +99,9 @@ public class MealServiceTest {
         MATCHER.assertEquals(ADMIN_MEAL1, actual);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void testGetNotFound() throws Exception {
+    @Test
+    public void testGetNotFound() {
+        thrown.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);
     }
 
@@ -110,8 +112,9 @@ public class MealServiceTest {
         MATCHER.assertEquals(updated, service.get(MEAL1_ID, USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
-    public void testUpdateNotFound() throws Exception {
+    @Test
+    public void testUpdateNotFound() {
+        thrown.expect(NotFoundException.class);
         service.update(MEAL1, ADMIN_ID);
     }
 
@@ -125,6 +128,5 @@ public class MealServiceTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 service.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), USER_ID));
     }
-
 
 }
