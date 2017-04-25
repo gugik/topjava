@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
@@ -113,6 +114,17 @@ public class User extends NamedEntity {
 
     public String getPassword() {
         return password;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    public List<Meal> meals;
+
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 
     @Override
