@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,12 +15,10 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class MealServiceImpl implements MealService {
 
     private final MealRepository repository;
-    private final UserRepository userRepository;
 
     @Autowired
-    public MealServiceImpl(MealRepository repository, UserRepository userRepository) {
+    public MealServiceImpl(MealRepository repository) {
         this.repository = repository;
-        this.userRepository = userRepository;
     }
 
     @Override

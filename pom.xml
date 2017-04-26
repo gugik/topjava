@@ -164,6 +164,18 @@
 
     <profiles>
         <profile>
+            <id>jdbc</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>jpa</id>
+        </profile>
+        <profile>
+            <id>datajpa</id>
+        </profile>
+        <profile>
             <id>hsqldb</id>
             <dependencies>
                 <dependency>

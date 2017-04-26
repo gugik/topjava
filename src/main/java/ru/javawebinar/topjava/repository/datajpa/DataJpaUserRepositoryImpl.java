@@ -15,8 +15,6 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
 
     @Autowired
     private CrudUserRepository crudRepository;
-    @Autowired
-    private CrudMealRepository crudMealRepository;
 
     @Override
     public User save(User user) {
@@ -46,8 +44,6 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     @Override
     @Transactional
     public User getWithMeal(int id) {
-        User user = get(id);
-        user.setMeals(crudMealRepository.getAll(id));
-        return user;
+        return crudRepository.getWithMeal(id);
     }
 }

@@ -86,10 +86,6 @@ abstract public class JdbcMealRepositoryImpl implements MealRepository {
                 ROW_MAPPER, userId, convert(startDate), convert(endDate));
     }
 
-    public <T> T convert(LocalDateTime dateTime) {
-        return (T) dateTime;
-    }
-
     @Override
     public Meal getWithUser(int id, int userId) {
         throw new UnsupportedOperationException();

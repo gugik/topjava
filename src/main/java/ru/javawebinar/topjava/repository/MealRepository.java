@@ -26,4 +26,8 @@ public interface MealRepository {
     List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
 
     Meal getWithUser(int id, int userId);
+
+    default <T> T convert(LocalDateTime dateTime) {
+        return (T) dateTime;
+    }
 }
