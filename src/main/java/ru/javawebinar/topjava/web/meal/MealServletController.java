@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +19,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping(value = "/meals")
-public class MealServletController extends MealRestController {
-
-    public MealServletController(MealService service) {
-        super(service);
-    }
+public class MealServletController extends AbstractMealController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(HttpServletRequest request) {
@@ -34,7 +29,7 @@ public class MealServletController extends MealRestController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(Model model)  {
+    public String create(Model model) {
 
         final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
@@ -42,7 +37,7 @@ public class MealServletController extends MealRestController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(HttpServletRequest request, Model model)  {
+    public String update(HttpServletRequest request, Model model) {
         final Meal meal = super.get(getId(request));
         model.addAttribute("meal", meal);
         return "meal";
@@ -56,8 +51,7 @@ public class MealServletController extends MealRestController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public String save(HttpServletRequest request)  {
-        //request.setCharacterEncoding("UTF-8");
+    public String save(HttpServletRequest request) {
 
         final Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
@@ -74,7 +68,6 @@ public class MealServletController extends MealRestController {
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public String filter(HttpServletRequest request) {
-        //request.setCharacterEncoding("UTF-8");
 
         LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
