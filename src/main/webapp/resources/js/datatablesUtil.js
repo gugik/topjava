@@ -11,6 +11,10 @@ function makeEditable() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
+
+    $('.userEnable').click(function () {
+        userCheck($(this).parent().parent().attr("id"), $(this));
+    });
 }
 
 function add() {
@@ -28,19 +32,13 @@ function deleteRow(id) {
         }
     });
 }
-
-function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear();
-        $.each(data, function (key, item) {
-            datatableApi.row.add(item);
-        });
-        datatableApi.draw();
-    });
+function updateTableByData(data) {
+    datatableApi.clear().rows.add(data).draw();
 }
 
 function save() {
     var form = $('#detailsForm');
+    console.log(form.serialize());
     $.ajax({
         type: "POST",
         url: ajaxUrl,

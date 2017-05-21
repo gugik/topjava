@@ -1,6 +1,20 @@
 var ajaxUrl = 'ajax/meals/';
 var datatableApi;
 
+function updateTable() {
+    console.log($("#filter").serialize())
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl + "filter",
+        data: $("#filter").serialize(),
+        success: updateTableByData
+    });
+}
+
+function clearFilter() {
+    $("#filter")[0].reset();
+    $.get(ajaxUrl, updateTableByData);
+}
 
 $(function () {
     datatableApi = $('#datatable').DataTable({
