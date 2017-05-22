@@ -4,13 +4,11 @@ import org.springframework.format.Formatter;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
-import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDateTime;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 /**
@@ -43,7 +41,7 @@ public class DateTimeFormatters {
             return lt.format(DateTimeFormatter.ISO_LOCAL_TIME);
         }
     }
-    public static class LocalDateTimeFormatter implements Formatter<LocalDateTime> {
+   /* public static class LocalDateTimeFormatter implements Formatter<LocalDateTime> {
 
         @Override
         public LocalDateTime parse(String text, Locale locale) throws ParseException {
@@ -55,5 +53,5 @@ public class DateTimeFormatters {
         public String print(LocalDateTime ldt, Locale locale) {
             return ldt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         }
-    }
+    }*/
 }

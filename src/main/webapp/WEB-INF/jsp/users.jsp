@@ -47,7 +47,7 @@
                             <td><a class="btn btn-xs btn-primary">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
-                            <td><a class="btn btn-xs btn-danger delete" >
+                            <td><a class="btn btn-xs btn-danger" onclick="deleteRow()">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a></td>
                         </tr>
@@ -96,7 +96,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" onclick="save()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>

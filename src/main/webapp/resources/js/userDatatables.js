@@ -15,8 +15,8 @@ function userCheck(id, cb) {
             successNoty(cb.is(":checked")?"Enabled":"Disabled");
         }
     });
-    console.log(id);
-    console.log(cb.is(":checked"));
+  //  console.log(id);
+  //  console.log(cb.is(":checked"));
 }
 
 // $(document).ready(function () {

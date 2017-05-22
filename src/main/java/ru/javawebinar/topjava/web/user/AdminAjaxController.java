@@ -44,10 +44,10 @@ public class AdminAjaxController extends AbstractUserController {
         }
     }
 
+    @Override
     @PostMapping("/enable")
-    public void enable(@RequestParam("id") Integer id,
-                       @RequestParam("enable") Boolean enable) {
-        if (super.get(id).isEnabled() != enable) super.get(id).setEnabled(enable);
+    public void enable(@RequestParam("id") int id,
+                       @RequestParam("enable") boolean enable) {
         super.enable(id, enable);
     }
 }

@@ -2,7 +2,7 @@ var ajaxUrl = 'ajax/meals/';
 var datatableApi;
 
 function updateTable() {
-    console.log($("#filter").serialize())
+  //  console.log($("#filter").serialize())
     $.ajax({
         type: "GET",
         url: ajaxUrl + "filter",
@@ -42,7 +42,7 @@ $(function () {
         "order": [
             [
                 0,
-                "deck"
+                "desc"
             ]
         ]
     });

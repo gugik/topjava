@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     @CacheEvict(value = "users", allEntries = true)
-    public void enable(Integer id, Boolean enable) {
+    public void enable(int id, boolean enable) {
         User user=get(id);
         user.setEnabled(enable);
         repository.save(user);

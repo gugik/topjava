@@ -1,12 +1,12 @@
 function makeEditable() {
-    $('.delete').click(function () {
+  /*  $('.delete').click(function () {
         deleteRow($(this).parent().parent().attr("id"));
-    });
+    });*/
 
-    $('#detailsForm').submit(function () {
+  /*  $('#detailsForm').submit(function () {
         save();
         return false;
-    });
+    });*/
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
@@ -38,7 +38,7 @@ function updateTableByData(data) {
 
 function save() {
     var form = $('#detailsForm');
-    console.log(form.serialize());
+  //  console.log(form.serialize());
     $.ajax({
         type: "POST",
         url: ajaxUrl,
