@@ -85,7 +85,7 @@
                         <td><a class="btn btn-xs btn-primary">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a></td>
-                        <td><a class="btn btn-xs btn-danger" onclick="deleteRow()">
+                        <td><a class="btn btn-xs btn-danger" onclick='deleteRow($(this).parent().parent().attr("id"))'>
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a></td>
 
@@ -111,23 +111,29 @@
                 <h3><spring:message code="${meal.isNew() ? 'meals.add' : 'meals.edit'}"/></h3>--%>
                 <form class="form-horizontal" id="detailsForm">
                     <input type="hidden" name="id" value="${meal.id}">
-                    <div>
-                        <label><spring:message code="meals.dateTime"/>:</label>
-                        <div class="col-xs-9"><input type="datetime-local" value="${meal.dateTime}" name="dateTime"></div>
+                    <div class="form-group">
+                        <label for="dateTime" class="control-label col-xs-3"><spring:message code="meals.dateTime"/>:</label>
+                        <div class="col-xs-9">
+                            <input type="datetime-local" value="${meal.dateTime}" id="dateTime" name="dateTime">
+                        </div>
                     </div>
-                    <div>
-                        <label><spring:message code="meals.description"/>:</label>
-                        <div class="col-xs-9"><input type="text" value="${meal.description}" size=40 name="description"></div>
+                    <div class="form-group">
+                        <label for="description" class="control-label col-xs-3"><spring:message code="meals.description"/>:</label>
+                        <div class="col-xs-9">
+                            <input type="text" value="${meal.description}" size=40 id="description" name="description">
+                        </div>
                     </div>
-                    <div>
-                        <label><spring:message code="meals.calories"/>:</label>
-                        <div class="col-xs-9"><input type="number" value="${meal.calories}" name="calories"></div>
+                    <div class="form-group">
+                        <label for="calories" class="control-label col-xs-3"><spring:message code="meals.calories"/>:</label>
+                        <div class="col-xs-9">
+                            <input type="number" value="${meal.calories}" id="calories" name="calories">
+                        </div>
                     </div>
                     <%--<button type="submit"><spring:message code="common.save"/></button>
                     <button onclick="window.history.back()"><spring:message code="common.cancel"/></button>--%>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button type="submit" class="btn btn-primary" onclick="save()">
+                            <button type="button" class="btn btn-primary" onclick="save()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>

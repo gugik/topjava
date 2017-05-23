@@ -12,9 +12,7 @@ function makeEditable() {
         failNoty(event, jqXHR, options, jsExc);
     });
 
-    $('.userEnable').click(function () {
-        userCheck($(this).parent().parent().attr("id"), $(this));
-    });
+
 }
 
 function add() {

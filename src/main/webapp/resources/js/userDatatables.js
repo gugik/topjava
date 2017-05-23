@@ -57,4 +57,8 @@ $(function () {
         ]
     });
     makeEditable();
+
+    $('.userEnable').click(function () {
+        userCheck($(this).parent().parent().attr("id"), $(this));
+    });
 });
