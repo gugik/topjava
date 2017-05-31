@@ -25,7 +25,10 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "dateTime"
+                "data": "dateTime",
+                "render": function (data, type, row) {
+                    return data.replace("T", " ").substring(0,16);
+                }
             },
             {
                 "data": "description"
@@ -46,11 +49,7 @@ $(function () {
 
         ],
         "createdRow": function (row, data, dataIndex) {
-            if (!data.exceed) {
-                $(row).addClass("normal");
-            } else {
-                $(row).addClass("exceeded");
-            }
+            (!data.exceed)? $(row).addClass("normal"): $(row).addClass("exceeded");
         },
         "order": [
             [

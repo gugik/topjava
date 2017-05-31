@@ -1,12 +1,27 @@
 var form;
 
+$(function () {
+        $('.dateTime').datetimepicker({
+            format: 'Y-m-d H:i'
+        });
+    $('.date').datetimepicker({
+        timepicker:false,
+        format: 'Y-m-d'
+    });
+    $('.time').datetimepicker({
+        datepicker:false,
+        format: 'H:i'
+    });
+    }
+);
+
 function makeEditable() {
     form = $('#detailsForm');
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
     });
     // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
-    $.ajaxSetup({ cache: false });
+    $.ajaxSetup({cache: false});
 }
 
 function add() {
@@ -19,6 +34,7 @@ function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
+            if (key == "dateTime") value = value.replace("T", " ").substring(0, 16);
             form.find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
@@ -90,7 +106,7 @@ function renderEditBtn(data, type, row) {
 
 function renderDeleteBtn(data, type, row) {
     if (type === 'display') {
-        return '<a onclick="deleteRow(' + row.id + ');">'+
+        return '<a onclick="deleteRow(' + row.id + ');">' +
             '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
     }
 }

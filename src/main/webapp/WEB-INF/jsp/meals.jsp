@@ -31,14 +31,14 @@
                                                 code="meals.startDate"/>:</label>
 
                                         <div class="col-sm-4">
-                                            <input class="form-control" type="date" name="startDate" id="startDate">
+                                            <input class="form-control date" type="text" name="startDate" id="startDate">
                                         </div>
 
                                         <label class="control-label col-sm-3" for="startTime"><spring:message
                                                 code="meals.startTime"/>:</label>
 
                                         <div class="col-sm-3">
-                                            <input class="form-control" type="time" name="startTime" id="startTime">
+                                            <input class="form-control time" type="text" name="startTime" id="startTime">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -46,14 +46,14 @@
                                                 code="meals.endDate"/>:</label>
 
                                         <div class="col-sm-4">
-                                            <input class="form-control" type="date" name="endDate" id="endDate">
+                                            <input class="form-control date" type="text" name="endDate" id="endDate">
                                         </div>
 
                                         <label class="control-label col-sm-3" for="endTime"><spring:message
                                                 code="meals.endTime"/>:</label>
 
                                         <div class="col-sm-3">
-                                            <input class="form-control" type="time" name="endTime" id="endTime">
+                                            <input class="form-control time" type="text" name="endTime" id="endTime">
                                         </div>
                                     </div>
                                 </form>
@@ -115,8 +115,7 @@
                                    placeholder="<spring:message code="meals.dateTime"/>">--%>
 
 
-
-                            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                            <input type="text" class="form-control dateTime" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meals.dateTime"/>">
 
 
