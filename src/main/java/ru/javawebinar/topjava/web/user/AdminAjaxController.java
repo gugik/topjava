@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
-import ru.javawebinar.topjava.util.ControllerUtil;
 import ru.javawebinar.topjava.util.UserUtil;
+import ru.javawebinar.topjava.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -45,7 +45,7 @@ public class AdminAjaxController extends AbstractUserController {
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         if (result.hasErrors()) {
-            return ControllerUtil.processErrors(result);
+            return ValidationUtil.processErrors(result);
         }
 
         if (userTo.isNew()) {

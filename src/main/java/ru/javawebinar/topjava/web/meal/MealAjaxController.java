@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.ControllerUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -42,7 +42,7 @@ public class MealAjaxController extends AbstractMealController {
     public ResponseEntity<String> createOrUpdate(@Valid MealTo mealTo, BindingResult result) {
 
         if (result.hasErrors()) {
-            return ControllerUtil.processErrors(result);
+            return ValidationUtil.processErrors(result);
         }
 
         if (mealTo.isNew()) {
