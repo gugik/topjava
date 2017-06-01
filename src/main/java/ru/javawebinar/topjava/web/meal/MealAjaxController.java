@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.ControllerUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.validation.Valid;
@@ -41,14 +42,14 @@ public class MealAjaxController extends AbstractMealController {
     public ResponseEntity<String> createOrUpdate(@Valid MealTo mealTo, BindingResult result) {
 
         if (result.hasErrors()) {
-            StringBuilder sb = new StringBuilder();
-            result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+            return ControllerUtil.processErrors(result);
         }
 
         if (mealTo.isNew()) {
             super.create(MealsUtil.createNewFromTo(mealTo));
-        } else {super.update(mealTo);}
+        } else {
+            super.update(mealTo);
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
 
