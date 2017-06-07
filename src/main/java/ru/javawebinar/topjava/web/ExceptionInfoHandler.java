@@ -2,11 +2,15 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
@@ -21,6 +25,9 @@ import javax.validation.ValidationException;
 public class ExceptionInfoHandler {
     private static Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
+    @Autowired
+    private MessageSource messageSource;
+
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
@@ -34,7 +41,21 @@ public class ExceptionInfoHandler {
     @ResponseBody
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         if (e.getCause().getCause().getMessage().contains("users_unique_email_idx"))
-            return logAndGetErrorInfo(req, new DataIntegrityViolationException("User with this email already present in application"), true);
+            return logAndGetErrorInfo(req,
+                    new DataIntegrityViolationException(
+                            messageSource.getMessage(
+                                    "users.email.duplicate", null, LocaleContextHolder.getLocale()
+                            )
+                    ), true
+            );
+        if (e.getCause().getCause().getMessage().contains("meals_unique_user_datetime_idx"))
+            return logAndGetErrorInfo(req,
+                    new DataIntegrityViolationException(
+                            messageSource.getMessage(
+                                    "meals.datetime.duplicate", null, LocaleContextHolder.getLocale()
+                            )
+                    ), true
+            );
         return logAndGetErrorInfo(req, e, true);
     }
 

@@ -158,4 +158,41 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
                         MealsUtil.getWithExceeded(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1), USER.getCaloriesPerDay())));
     }
+
+
+    @Test
+    public void testUpdateNotValidDataDateTime() throws Exception {
+        Meal updated = getUpdated();
+        updated.setDateTime(MEAL2.getDateTime());
+
+        mockMvc.perform(put(REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void testCreateDoubleDateDateTime() throws Exception {
+        Meal created = getCreated();
+        created.setDateTime(MEAL1.getDateTime());
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created))
+                .with(userHttpBasic(USER)))
+                .andExpect(status().isConflict());
+    }
+
+   /* @Test
+    public void testUpdateDoubleEmail() throws Exception {
+        UserTo updatedTo = new UserTo(null, "newName", ADMIN.getEmail(), "newPassword", 1500);
+
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }*/
+
 }

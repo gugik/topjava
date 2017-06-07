@@ -72,7 +72,7 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testUpdateDouble() throws Exception {
+    public void testUpdateDoubleEmail() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", ADMIN.getEmail(), "newPassword", 1500);
 
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)

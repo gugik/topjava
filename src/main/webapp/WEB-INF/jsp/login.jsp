@@ -21,10 +21,24 @@
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                 </button>
             </form:form>
+
         </div>
+        <div class=" navbar-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">ru<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a onclick="show('en')">English</a></li>
+                <li><a onclick="show('ru')">Русский</a></li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var localeCode="ru";
+            function show(lang) {
+                window.location.href = window.location.href.split('?')[0] + '?lang=' + lang;
+            }
+        </script>
     </div>
 </div>
-
+<br>
 <div class="jumbotron">
     <div class="container">
         <c:if test="${param.error}">
