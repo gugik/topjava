@@ -40,23 +40,13 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseBody
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        if (e.getCause().getCause().getMessage().contains("users_unique_email_idx"))
-            return logAndGetErrorInfo(req,
-                    new DataIntegrityViolationException(
-                            messageSource.getMessage(
-                                    "users.email.duplicate", null, LocaleContextHolder.getLocale()
-                            )
-                    ), true
-            );
-        if (e.getCause().getCause().getMessage().contains("meals_unique_user_datetime_idx"))
-            return logAndGetErrorInfo(req,
-                    new DataIntegrityViolationException(
-                            messageSource.getMessage(
-                                    "meals.datetime.duplicate", null, LocaleContextHolder.getLocale()
-                            )
-                    ), true
-            );
-        return logAndGetErrorInfo(req, e, true);
+        String er = ValidationUtil.getRootCause(e).getMessage();
+        if (er.contains("users_unique_email_idx"))
+            er = messageSource.getMessage("users.email.duplicate", null, LocaleContextHolder.getLocale());
+        else if (er.contains("meals_unique_user_datetime_idx"))
+            er = messageSource.getMessage("meals.datetime.duplicate", null, LocaleContextHolder.getLocale());
+
+        return logAndGetErrorInfo(req, new DataIntegrityViolationException(er), true);
     }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
