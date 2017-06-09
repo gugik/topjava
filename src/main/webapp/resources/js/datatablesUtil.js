@@ -15,6 +15,25 @@ function makeEditable() {
     });
 }
 
+// https://api.jquery.com/jquery.extend/#jQuery-extend-deep-target-object1-objectN
+function extendsOpts(opts) {
+    $.extend(true, opts,
+        {
+            "ajax": {
+                "url": ajaxUrl,
+                "dataSrc": ""
+            },
+            "paging": false,
+            "info": true,
+            "language": {
+                "search": i18n["common.search"]
+            },
+            "initComplete": makeEditable
+        }
+    );
+    return opts;
+}
+
 function add() {
     $('#modalTitle').html(i18n["addTitle"]);
     form.find(":input").val("");
@@ -82,7 +101,7 @@ function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = $.parseJSON(jqXHR.responseText);
     failedNote = noty({
-        text: i18n['common.errorStatus'] + ': ' + jqXHR.status + '<br>'+ errorInfo.cause + '<br>' + errorInfo.detail,
+        text: i18n['common.errorStatus'] + ': ' + jqXHR.status + '<br>'+ errorInfo.cause + '<br>' + errorInfo.details.join("<br>"),
         type: 'error',
         layout: 'bottomRight'
     });
