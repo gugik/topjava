@@ -1,0 +1,54 @@
+
+Uliana Serhiienko
+Female, 33 years, born on 18 August 1984
+
++380 (50) 9994245
+gugik2006@gmail.com — preferred means of communication
+Skype: gugik2006@gmail.com
+
+Reside in: Lvov
+Citizenship: Ukraine, work permit at: Ukraine
+Not ready to relocate, ready for business trips
+Desired position
+Junior Java Developer
+IT, Internet, Telecom
+Software Development
+
+Employment: full time, part time, project work, volunteering, work placement
+Work schedule: full day, shift schedule, flexible schedule, remote working, rotation based work
+
+    Work experience
+
+    October 2016 — till now
+
+	Java Online Projects
+Java Developer
+1. Participation in development Spring / JPA Enterprise applications using authentication and role-based access rights based on the stack Maven / Spring MVC / Security / REST (Jackson) / Java 8 Stream and Time API:
+Implementation of conservation in Postgres and HSQLDB database based on Spring JBDC, JPA (Hibernate) and Spring-Data-JPA
+Implementation and testing of REST and AJAX controllers
+Implementation of the client side on the Bootstrap (css / js), datatables, jQuery + plugins.
+Project source: https://github.com/gugik/topjava/
+
+    Education
+
+Higher
+2006	Donetsk National Technical University
+Specialty: ecology and environmental protection
+Qualification: Master of Ecology and Environmental Protection
+
+    Professional development, courses
+
+2016	JavaRush
+Java Online Projects, Java Developer
+
+    Key skills
+Languages	Russian — native
+English — Pre-Intermediate
+Ukrainian — native
+
+    Skills
+OOP  Java Core  Java EE  Spring  Hibernate  PostgreSQL  MySQL  HSQLDB  JUnit  REST  Git  Maven  Ajax  jQuery  JavaScript  HTML  CSS
+
+    Additional information
+About me	Less than one year in Java development. I would like to participate in interesting projects using modern technologies. Preferably in a large outsourcing company.
+
